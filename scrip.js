@@ -32,6 +32,14 @@
     if(filename&&image){image.src=asset(filename);image.removeAttribute('srcset');}
   });
 
+  // Muestra tres productos distintos del catálogo en el collage principal.
+  var collageImages=document.querySelectorAll('.collage img');
+  ['GIM-01','GIM-02','GIM-03'].forEach(function(code,index){
+    var image=collageImages[index];
+    var filename=productImages[code];
+    if(image&&filename){image.src=asset(filename);image.removeAttribute('srcset');}
+  });
+
   var menu=document.getElementById('menuBtn'), nav=document.getElementById('nav');
   menu.addEventListener('click',function(){var o=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(o));});
   nav.addEventListener('click',function(e){if(e.target.tagName==='A'){nav.classList.remove('open');menu.setAttribute('aria-expanded','false');}});
