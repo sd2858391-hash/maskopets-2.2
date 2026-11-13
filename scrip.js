@@ -1,5 +1,6 @@
 (function(){
   var chips=document.querySelectorAll('.chip'), cards=document.querySelectorAll('.card'), count=document.getElementById('count');
+  function asset(name){return 'img/'+encodeURIComponent(name).replace(/%2F/gi,'/')+'?v=2';}
   function apply(f){
     var n=0;
     cards.forEach(function(c){var show=f==='todos'||c.dataset.type===f;c.hidden=!show;if(show)n++;});
@@ -9,7 +10,7 @@
   chips.forEach(function(b){b.addEventListener('click',function(){apply(b.dataset.filter);});});
   apply('todos');
 
-  // Cada archivo disponible corresponde a un producto distinto; CAM-07 no tiene imagen propia aún.
+  // Archivos de producto disponibles en /img. Se asignan también en HTML vía este script.
   var productImages={
     'GIM-01':'Code_Generated_Image.png',
     'GIM-02':'Code_Generated_Image (1).png',
@@ -27,7 +28,8 @@
   };
   cards.forEach(function(card){
     var filename=productImages[card.dataset.code];
-    if(filename){card.querySelector('.card-img img').src='img/'+encodeURIComponent(filename).replace(/%2F/gi,'/');}
+    var image=card.querySelector('.card-img img');
+    if(filename&&image){image.src=asset(filename);image.removeAttribute('srcset');}
   });
 
   var menu=document.getElementById('menuBtn'), nav=document.getElementById('nav');
