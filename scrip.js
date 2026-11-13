@@ -1,0 +1,31 @@
+(function(){
+  var chips=document.querySelectorAll('.chip'), cards=document.querySelectorAll('.card'), count=document.getElementById('count');
+  function apply(f){
+    var n=0;
+    cards.forEach(function(c){var show=f==='todos'||c.dataset.type===f;c.hidden=!show;if(show)n++;});
+    chips.forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.filter===f));});
+    count.textContent=n+(n===1?' producto':' productos');
+  }
+  chips.forEach(function(b){b.addEventListener('click',function(){apply(b.dataset.filter);});});
+  apply('todos');
+
+  var menu=document.getElementById('menuBtn'), nav=document.getElementById('nav');
+  menu.addEventListener('click',function(){var o=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(o));});
+  nav.addEventListener('click',function(e){if(e.target.tagName==='A'){nav.classList.remove('open');menu.setAttribute('aria-expanded','false');}});
+
+  var dlg=document.getElementById('viewer');
+  document.querySelectorAll('[data-open]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var c=btn.closest('.card'), img=c.querySelector('img');
+      document.getElementById('vImg').src=img.src;
+      document.getElementById('vImg').alt=img.alt;
+      document.getElementById('vCode').textContent=c.querySelector('.code').textContent;
+      document.getElementById('vName').textContent=c.querySelector('h3').textContent;
+      document.getElementById('vDims').innerHTML=c.querySelector('dl').innerHTML;
+      document.getElementById('vWa').href=c.querySelector('.btn-wa').href;
+      if(dlg.showModal){dlg.showModal();}else{dlg.setAttribute('open','');}
+    });
+  });
+  document.getElementById('closeBtn').addEventListener('click',function(){dlg.close();});
+  dlg.addEventListener('click',function(e){if(e.target===dlg)dlg.close();});
+})();
