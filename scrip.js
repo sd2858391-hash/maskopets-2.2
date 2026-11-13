@@ -9,6 +9,27 @@
   chips.forEach(function(b){b.addEventListener('click',function(){apply(b.dataset.filter);});});
   apply('todos');
 
+  // Cada archivo disponible corresponde a un producto distinto; CAM-07 no tiene imagen propia aún.
+  var productImages={
+    'GIM-01':'Code_Generated_Image.png',
+    'GIM-02':'Code_Generated_Image (1).png',
+    'GIM-03':'Code_Generated_Image (2).png',
+    'GIM-04':'Code_Generated_Image (3).png',
+    'GIM-05':'Code_Generated_Image (4).png',
+    'GIM-06':'Code_Generated_Image (5).png',
+    'GIM-07':'Code_Generated_Image (6).png',
+    'CAM-01':'Code_Generated_Image (7).png',
+    'CAM-02':'Code_Generated_Image (8).png',
+    'CAM-03':'Code_Generated_Image (9).png',
+    'CAM-04':'Code_Generated_Image (10).png',
+    'CAM-05':'Code_Generated_Image (11).png',
+    'CAM-06':'Code_Generated_Image (12).png'
+  };
+  cards.forEach(function(card){
+    var filename=productImages[card.dataset.code];
+    if(filename){card.querySelector('.card-img img').src='img/'+encodeURIComponent(filename).replace(/%2F/gi,'/');}
+  });
+
   var menu=document.getElementById('menuBtn'), nav=document.getElementById('nav');
   menu.addEventListener('click',function(){var o=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(o));});
   nav.addEventListener('click',function(e){if(e.target.tagName==='A'){nav.classList.remove('open');menu.setAttribute('aria-expanded','false');}});
